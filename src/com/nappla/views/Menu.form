@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.nappla.views.Menu">
-  <grid id="f0479" binding="menuPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="f0479" binding="menuPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="579" height="352"/>
+      <xy x="1" y="9" width="646" height="362"/>
     </constraints>
     <properties>
-      <preferredSize width="569" height="400"/>
+      <preferredSize width="800" height="400"/>
     </properties>
     <border type="none"/>
     <children>
       <tabbedpane id="db585" binding="menuTabbedPanel">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="200" height="200"/>
           </grid>
         </constraints>
@@ -26,7 +26,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="ab6e7" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="ab6e7" layout-manager="GridLayoutManager" row-count="2" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="16" left="32" bottom="16" right="32"/>
                 <constraints>
                   <grid row="2" column="0" row-span="3" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -35,26 +35,6 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <grid id="652f5" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
-                    <constraints>
-                      <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties/>
-                    <border type="none"/>
-                    <children>
-                      <component id="f11d7" class="javax.swing.JLabel" binding="feedbackLabel" custom-create="true">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <horizontalAlignment value="0"/>
-                          <horizontalTextPosition value="0"/>
-                          <text value=""/>
-                        </properties>
-                      </component>
-                    </children>
-                  </grid>
                   <component id="5ebea" class="javax.swing.JFormattedTextField" binding="depositAmountTextField" custom-create="true">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
@@ -101,14 +81,6 @@
                     </constraints>
                     <properties>
                       <text value="Aumentar limite"/>
-                    </properties>
-                  </component>
-                  <component id="fd77f" class="javax.swing.JButton" binding="signOutButton" custom-create="true">
-                    <constraints>
-                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Sair"/>
                     </properties>
                   </component>
                 </children>
@@ -197,35 +169,81 @@
               </grid>
             </children>
           </grid>
-          <grid id="596c0" binding="adminTab" layout-manager="GridBagLayout">
+          <grid id="6facb" binding="adminPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints>
-              <tabbedpane title="Administrador"/>
+              <tabbedpane title="Administrator"/>
             </constraints>
             <properties/>
             <border type="none"/>
             <children>
-              <scrollpane id="3a4db">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                  <gridbag weightx="1.0" weighty="1.0"/>
-                </constraints>
+              <grid id="d99ff" binding="tablePanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints border-constraint="North"/>
                 <properties>
-                  <verticalScrollBarPolicy value="20"/>
+                  <preferredSize width="513" height="300"/>
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="1168c" class="javax.swing.JTable" binding="accountsTable" custom-create="true">
-                    <constraints/>
+                  <scrollpane id="3a4db" binding="scrollPane" custom-create="true">
+                    <constraints border-constraint="Center"/>
                     <properties>
-                      <dropMode value="USE_SELECTION"/>
+                      <verticalScrollBarPolicy value="20"/>
+                    </properties>
+                    <border type="none"/>
+                    <children>
+                      <component id="1168c" class="javax.swing.JTable" binding="accountsTable" custom-create="true">
+                        <constraints/>
+                        <properties>
+                          <dropMode value="USE_SELECTION"/>
+                          <fillsViewportHeight value="false"/>
+                          <intercellSpacing width="2" height="2"/>
+                          <name value="Accounts"/>
+                          <preferredScrollableViewportSize width="500" height="10"/>
+                        </properties>
+                        <clientProperties>
+                          <terminateEditOnFocusLost class="java.lang.Boolean" value="false"/>
+                        </clientProperties>
+                      </component>
+                    </children>
+                  </scrollpane>
+                </children>
+              </grid>
+              <grid id="4057b" layout-manager="GridBagLayout">
+                <constraints border-constraint="Center"/>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="68c78" class="javax.swing.JButton" binding="btnAddAccount" custom-create="true">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <text value="Add Account"/>
                     </properties>
                   </component>
                 </children>
-              </scrollpane>
+              </grid>
             </children>
           </grid>
         </children>
       </tabbedpane>
+      <grid id="6afbe" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="4">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="fd77f" class="javax.swing.JButton" binding="signOutButton" custom-create="true">
+            <constraints/>
+            <properties>
+              <horizontalAlignment value="0"/>
+              <horizontalTextPosition value="0"/>
+              <text value="Sair"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
     </children>
   </grid>
 </form>

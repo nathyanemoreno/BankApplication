@@ -1,27 +1,30 @@
 package com.nappla.models;
 
-import com.nappla.*;
-import com.nappla.daos.AccountDAO;
-import com.nappla.exceptions.AccountNotFound;
 import com.nappla.exceptions.EmptyValueException;
 import com.nappla.exceptions.NotEnoughCashException;
 import com.nappla.exceptions.UnexpectedLimitException;
 
-import java.sql.*;
 import java.util.ArrayList;
 
 public class Account {
-    private int accountNumber;
-    private String name;
-    private int password;
-    private double balance;
-    private int limit;
-    private boolean isAdmin;
-    private ArrayList<Account> accounts = new ArrayList<>();
 
-    private static Connection conn = null;
-    private static Statement stmt = null;
-    public static String tableName = "accounts";
+    public Account(){
+    }
+
+    @MyColumn(position = 0, name = "ID")
+    private int id;
+    @MyColumn(position = 1, name = "ACCOUNT NUMBER")
+    private int accountNumber;
+    @MyColumn(position = 2, name = "NAME")
+    private String name;
+    @MyColumn(position = 3, name = "PASSWORD")
+    private int password;
+    @MyColumn(position = 4, name = "BALANCE")
+    private double balance;
+    @MyColumn(position = 5, name = "LIMIT")
+    private int limit;
+    @MyColumn(position = 6, name = "IS_ADMIN")
+    private boolean isAdmin;
 
     public int getAccountNumber() {
         return accountNumber;
@@ -31,11 +34,8 @@ public class Account {
         this.accountNumber = accountNumber;
     }
 
-    public int getId() throws AccountNotFound {
-        // Will retrive the id of the account
-        AccountDAO accountDAO = new AccountDAO();
-        accountDAO.getAccount(accountNumber, password);
-        return accountNumber;
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -78,12 +78,16 @@ public class Account {
         return isAdmin;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setAccounts(ArrayList<Account> accounts) {
     }
 
     public void canDeposit(double amount) throws EmptyValueException {
         if (amount > 0) {
-//            balance += amount;
+            balance += amount;
         } else {
             throw new EmptyValueException();
         }

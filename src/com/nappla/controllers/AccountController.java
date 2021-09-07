@@ -31,10 +31,9 @@ public class AccountController {
     class CashDepositListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            double amount = menu.getCashDeposit();
             try {
+                double amount = menu.getCashDeposit();
                 AccountDAO accountDAO = new AccountDAO();
-//                account.canDeposit(amount);
                 accountDAO.cashDeposit(account, amount);
                 String password = JOptionPane.showInputDialog(menu, "Insira sua senha");
                 Account accountUp = accountDAO.getAccount(account.getAccountNumber(), Integer.parseInt(password));
@@ -42,17 +41,20 @@ public class AccountController {
                 menu.repaint();
             } catch (AccountNotFound e) {
                 new WarningDialog(menu, "Conta não encontrada");
+            } catch (EmptyValueException e) {
+                    new WarningDialog(menu, "Insira um valor para depósito");
             } catch (SQLException sqlException) {
                 sqlException.printStackTrace();
             }
         }
     }
+
     class CashExtractListener implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            double amount = menu.getCashExtract();
             try {
+                double amount = menu.getCashExtract();
                 AccountDAO accountDAO = new AccountDAO();
                 account.canExtract(amount);
                 accountDAO.cashExtract(account, amount);
@@ -62,6 +64,8 @@ public class AccountController {
                 menu.repaint();
             } catch (NotEnoughCashException e){
                 new WarningDialog(menu, "Saldo insuficiente");
+            }catch (EmptyValueException e) {
+                new WarningDialog(menu, "Insira um valor para saque");
             }
             catch (Exception e){
                 new WarningDialog(menu, "Senha incorreta ou conta não encontrada");
@@ -74,8 +78,8 @@ public class AccountController {
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            int limit = menu.getIncreaseLimit();
             try {
+                int limit = menu.getIncreaseLimit();
                 AccountDAO accountDAO = new AccountDAO();
                 account.canIncreaseLimit(limit);
                 accountDAO.increaseLimit(account, limit);
@@ -87,6 +91,8 @@ public class AccountController {
                 new WarningDialog(menu, "Insira um limite maior que o atual");
             }catch ( AccountNotFound e){
                 new WarningDialog(menu, "Conta não econtrada");
+            } catch (EmptyValueException e) {
+                new WarningDialog(menu, "Insira um valor para limite");
             } catch (SQLException sqlException) {
                 sqlException.printStackTrace();
             }

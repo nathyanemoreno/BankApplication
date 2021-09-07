@@ -7,8 +7,9 @@ import com.nappla.views.WarningDialog;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
-public class AccountDAO implements AccountType {
+public class AccountDAO implements GenericDAO<Account>{
     private Connection conn;
     private String url = "jdbc:postgresql://localhost:5432/bank";
     private String tableName = "accounts";
@@ -21,22 +22,6 @@ public class AccountDAO implements AccountType {
         } catch (SQLException excecao) {
             new WarningDialog(null, "Erro ao conectar ao banco de dados");
         }
-    }
-
-    public Account insertAccount(int accountNumber, String name, int password) {
-        String sql = "INSERT INTO accounts(id, name, password, accnumber) VALUES(?,?,?,?)";
-        try {
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, accountNumber);
-            stmt.setString(2, name);
-            stmt.setInt(3, password);
-            stmt.setInt(4, accountNumber);
-            stmt.execute();
-            stmt.close();
-        } catch (SQLException sqlExcept) {
-            sqlExcept.printStackTrace();
-        }
-        return null;
     }
 
     public Account getAccount(int accountNumber, int password) throws AccountNotFound {
@@ -63,37 +48,14 @@ public class AccountDAO implements AccountType {
         throw new AccountNotFound();
     }
 
-    @Override
-    public ArrayList<Account> getAccounts() {
-            String sql = "SELECT * FROM " + tableName;
-            try {
-                PreparedStatement stmt = conn.prepareCall(sql);
-                ResultSet result = stmt.executeQuery();
-                ResultSetMetaData data = result.getMetaData();
-                int columnsNumber = data.getColumnCount();
-                    while (result.next()) {
-                        Account account = new Account();
-                        setInfoAccount(result, columnsNumber, account);
-                        accounts.add(account);
-                    }
-                result.close();
-                stmt.close();
-                return accounts;
-            } catch (SQLException sqlExcept) {
-                sqlExcept.printStackTrace();
-            }
-        return null;
-    }
-
     private void setInfoAccount(ResultSet result, int columnsNumber, Account account) throws SQLException {
         for (int i = 1; i < columnsNumber; i++) {
+            account.setId(result.getInt("id"));
             account.setName(result.getString("name"));
             account.setBalance(result.getDouble("balance"));
             account.setLimit(result.getInt("acclimit"));
             account.setIsAdmin(result.getBoolean("is_admin"));
             account.setAccountNumber(result.getInt("accnumber"));
-//                            String column = result.getString(i);
-//                            System.out.println(column);
         }
     }
 
@@ -132,5 +94,65 @@ public class AccountDAO implements AccountType {
         } catch (SQLException sqlException){
             sqlException.printStackTrace();
         }
+    }
+
+    @Override
+    public void create(Account account) throws SQLException {
+        String sql = "INSERT INTO accounts(name, password, accnumber) VALUES(?,?,?)";
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, account.getName());
+            stmt.setInt(2, account.getPassword());
+            stmt.setInt(3, account.getAccountNumber());
+            stmt.execute();
+            stmt.close();
+        }
+        catch (SQLException sqlExcept) {
+            sqlExcept.printStackTrace();
+        }
+    }
+
+    @Override
+    public List<Account> retrieve() {
+        String sql = "SELECT * FROM " + tableName;
+        try {
+            PreparedStatement stmt = conn.prepareCall(sql);
+            ResultSet result = stmt.executeQuery();
+            ResultSetMetaData data = result.getMetaData();
+            int columnsNumber = data.getColumnCount();
+            while (result.next()) {
+                Account account = new Account();
+                setInfoAccount(result, columnsNumber, account);
+                accounts.add(account);
+            }
+            result.close();
+            stmt.close();
+            return accounts;
+        } catch (SQLException sqlExcept) {
+            sqlExcept.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void update(Account account) {
+        String sql = "UPDATE " + tableName + " SET name=?,  balance=?, acclimit=?,  is_admin=? WHERE accnumber=? ";
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, account.getName());
+            stmt.setDouble(2, account.getBalance());
+            stmt.setInt(3, account.getLimit());
+            stmt.setBoolean(4, account.getIsAdmin());
+            stmt.setInt(5, account.getAccountNumber());
+            stmt.execute();
+            stmt.close();
+        } catch (SQLException sqlExcept) {
+            sqlExcept.printStackTrace();
+        }
+    }
+
+    @Override
+    public void delete(Account account) {
+
     }
 }

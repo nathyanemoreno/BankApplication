@@ -3,18 +3,23 @@ package com.nappla.views;
 import com.nappla.components.Button;
 import com.nappla.components.Label;
 import com.nappla.components.TextField;
+import com.nappla.controllers.CreateAccountController;
 import com.nappla.controllers.LoginController;
+import com.nappla.daos.AccountDAO;
+import com.nappla.exceptions.EmptyValueException;
 import com.nappla.models.Account;
+import com.nappla.models.GenericTableModel;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public class Menu extends JFrame {
     private JPanel menuTab;
@@ -35,21 +40,24 @@ public class Menu extends JFrame {
     private JTable accountsTable;
     private JTabbedPane menuTabbedPanel;
     private JPanel menuPanel;
-    private JPanel adminTab;
+    private JScrollPane scrollPane;
+    private JButton btnAddAccount;
+    private JPanel tablePanel;
+    private JPanel adminPanel;
     private Menu menu;
     private Account account;
 
     public Menu() {
         super("Menu");
-//        menu = this;
 
         prepareGUI();
-        signOutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                Auth auth = new Auth();
-                onClose();
-            }
+        signOutButton.addActionListener(actionEvent -> {
+            Auth auth = new Auth();
+            Account account = new Account();
+
+            LoginController loginController = new LoginController(account, auth);
+            CreateAccountController createAccountController = new CreateAccountController(account, auth);
+            onClose();
         });
     }
 
@@ -82,6 +90,10 @@ public class Menu extends JFrame {
         btnIncreaseLimit.addActionListener(actionListener);
     }
 
+    public void addAccountListener(ActionListener actionListener) {
+        btnAddAccount.addActionListener(actionListener);
+    }
+
     public JTabbedPane getMenu() {
         return menuTabbedPanel;
     }
@@ -90,42 +102,52 @@ public class Menu extends JFrame {
         return balanceLabel;
     }
 
-    public double getCashDeposit(){
-        return Double.parseDouble(depositAmountTextField.getText());
+    public double getCashDeposit() throws EmptyValueException {
+        if(!depositAmountTextField.getText().equals("")){
+            return Double.parseDouble(depositAmountTextField.getText());
+        }else{
+            throw new EmptyValueException();
+        }
     }
 
-    public double getCashExtract(){
-        return Integer.parseInt(extractAmountTextField.getText());
+    public double getCashExtract() throws EmptyValueException{
+        if(!extractAmountTextField.getText().equals("")){
+            return Integer.parseInt(extractAmountTextField.getText());
+        }else{
+            throw new EmptyValueException();
+        }
     }
 
-    public int getIncreaseLimit(){
-        return Integer.parseInt(increaseLimitTextField.getText());
+    public int getIncreaseLimit() throws EmptyValueException{
+        if(!increaseLimitTextField.getText().equals("")){
+            return Integer.parseInt(increaseLimitTextField.getText());
+        }else{
+            throw new EmptyValueException();
+        }
     }
-
 
     public void setBalance(double balance) {
         accountBalance.setText(String.valueOf(balance));
     }
 
     public void setLimit(double limit) {
-        limitLabel.setText(String.valueOf(limit));
+        accountLimit.setText(String.valueOf(limit));
     }
 
     public void setName(double name) {
         nameLabel.setText(String.valueOf(name));
     }
 
-    public void renderAdminTab(ArrayList<Account> accounts){
-        DefaultTableModel tModel;
-        tModel = (DefaultTableModel) accountsTable.getModel();
-        String[] collum = new String[]{"ID", "NAME", "BALANCE", "LIMIT", "IS_ADMIN"};
-        System.out.println(Arrays.toString(accounts.toArray()));
-        for(Account account: accounts){
-        tModel.setColumnIdentifiers(collum);
-            Object[] data = new Object[] { account.getAccountNumber(), account.getName(), account.getBalance(), account.getLimit(), account.getIsAdmin() } ;
-            tModel.addRow(data);
-        }
-        accountsTable.setModel(tModel);
+    public void renderAdminTab(){
+        AccountDAO accountDAO = new AccountDAO();
+        AbstractTableModel accountsTableModel = new GenericTableModel<>(new AccountDAO()) {
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return columnIndex > 1;
+            }
+        };
+        accountsTable.setModel(accountsTableModel);
         accountsTable.setAutoCreateRowSorter(true);
     }
 
@@ -170,6 +192,8 @@ public class Menu extends JFrame {
         increaseLimitTextField = new TextField();
         signOutButton = new Button();
         accountsTable = new JTable();
+        scrollPane = new JScrollPane();
+        btnAddAccount = new Button();
     }
 
     private void onClose() {

@@ -7,24 +7,24 @@
     <properties>
       <autoscrolls value="false"/>
       <doubleBuffered value="true"/>
-      <preferredSize width="400" height="227"/>
+      <preferredSize width="500" height="300"/>
     </properties>
     <border type="none"/>
     <children>
-      <tabbedpane id="ba153" binding="jTabbedPanel" custom-create="true">
+      <tabbedpane id="ba153" binding="Tabs" custom-create="true">
         <constraints border-constraint="Center"/>
         <properties>
           <doubleBuffered value="true"/>
-          <font name="Ubuntu" size="18" style="0"/>
           <inheritsPopupMenu value="false"/>
           <minimumSize width="500" height="195"/>
-          <opaque value="false"/>
+          <opaque value="true"/>
           <preferredSize width="400" height="195"/>
+          <tabLayoutPolicy value="0"/>
           <tabPlacement value="1"/>
         </properties>
         <border type="none"/>
         <children>
-          <grid id="a54fe" layout-manager="GridBagLayout">
+          <grid id="a54fe" binding="loginPanel" layout-manager="GridBagLayout">
             <constraints>
               <tabbedpane title="Login"/>
             </constraints>
@@ -36,63 +36,15 @@
               <title-color color="-4473925"/>
             </border>
             <children>
-              <grid id="c4436" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="32" left="32" bottom="32" right="32"/>
+              <nested-form id="ef49b" form-file="com/nappla/views/Login.form" binding="login" custom-create="true">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
-                <properties>
-                  <minimumSize width="400" height="98"/>
-                </properties>
-                <border type="none"/>
-                <children>
-                  <component id="58a50" class="javax.swing.JLabel" binding="accountNumberLabel" custom-create="true">
-                    <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Account number"/>
-                    </properties>
-                  </component>
-                  <component id="dc7ce" class="javax.swing.JFormattedTextField" binding="loginAccountNumber" custom-create="true">
-                    <constraints>
-                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="2" use-parent-layout="false">
-                        <preferred-size width="150" height="-1"/>
-                      </grid>
-                    </constraints>
-                    <properties/>
-                  </component>
-                  <component id="69ade" class="javax.swing.JLabel" binding="passwordLoginLabel" custom-create="true">
-                    <constraints>
-                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Password"/>
-                    </properties>
-                  </component>
-                  <component id="4feb8" class="javax.swing.JPasswordField" binding="passwordLoginField" custom-create="true">
-                    <constraints>
-                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="2" use-parent-layout="false">
-                        <preferred-size width="150" height="-1"/>
-                      </grid>
-                    </constraints>
-                    <properties/>
-                  </component>
-                </children>
-              </grid>
-              <component id="e296d" class="javax.swing.JButton" binding="loginButton" custom-create="true">
-                <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                  <gridbag top="16" left="16" bottom="16" right="16" weightx="0.0" weighty="0.0"/>
-                </constraints>
-                <properties>
-                  <text value="Login"/>
-                </properties>
-              </component>
+              </nested-form>
             </children>
           </grid>
-          <grid id="3f5c9" binding="secondPane" layout-manager="GridBagLayout">
+          <grid id="3f5c9" binding="createAccountPanel" layout-manager="GridBagLayout">
             <constraints>
               <tabbedpane title="Create Account"/>
             </constraints>
@@ -102,77 +54,12 @@
             </properties>
             <border type="none"/>
             <children>
-              <grid id="3cf92" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="16" vgap="-1">
-                <margin top="32" left="32" bottom="32" right="32"/>
+              <nested-form id="c0a37" form-file="com/nappla/views/CreateAccount.form" binding="createAccount">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
-                <properties/>
-                <border type="none"/>
-                <children>
-                  <component id="768ad" class="javax.swing.JLabel" binding="numberLabel" custom-create="true">
-                    <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Account Number"/>
-                    </properties>
-                  </component>
-                  <component id="22737" class="javax.swing.JLabel" binding="nameLabel" custom-create="true">
-                    <constraints>
-                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Name"/>
-                    </properties>
-                  </component>
-                  <component id="8cd65" class="javax.swing.JFormattedTextField" binding="newAccountNumber" custom-create="true">
-                    <constraints>
-                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="2" use-parent-layout="false">
-                        <preferred-size width="150" height="-1"/>
-                      </grid>
-                    </constraints>
-                    <properties/>
-                  </component>
-                  <component id="cc319" class="javax.swing.JFormattedTextField" binding="name" custom-create="true">
-                    <constraints>
-                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="8" fill="1" indent="2" use-parent-layout="false">
-                        <preferred-size width="150" height="-1"/>
-                      </grid>
-                    </constraints>
-                    <properties/>
-                  </component>
-                  <component id="5f586" class="javax.swing.JLabel" binding="passwordLabel" custom-create="true">
-                    <constraints>
-                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Password"/>
-                    </properties>
-                  </component>
-                  <component id="81cdf" class="javax.swing.JPasswordField" binding="passwordField" custom-create="true">
-                    <constraints>
-                      <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="2" use-parent-layout="false">
-                        <preferred-size width="150" height="-1"/>
-                      </grid>
-                    </constraints>
-                    <properties/>
-                  </component>
-                </children>
-              </grid>
-              <component id="bae9b" class="javax.swing.JButton" binding="createAccountButton" custom-create="true">
-                <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                  <gridbag top="16" left="16" bottom="16" right="16" weightx="0.0" weighty="0.0"/>
-                </constraints>
-                <properties>
-                  <maximumSize width="80" height="30"/>
-                  <minimumSize width="80" height="30"/>
-                  <preferredSize width="371" height="30"/>
-                  <text value="Criar conta"/>
-                </properties>
-              </component>
+              </nested-form>
             </children>
           </grid>
         </children>
